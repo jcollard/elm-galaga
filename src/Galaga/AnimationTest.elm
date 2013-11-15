@@ -15,7 +15,7 @@ sprites
      R.enemy3, R.enemy4, R.enemy5, R.enemy6, R.enemy7,
      R.explode, R.death, R.ship, R.ship_captured,
      R.level1, R.level5, R.level10, R.level25, R.level50,
-     R.level100, R.level200, R.capture]
+     R.level100, R.capture]
 
 
 displayTest t = 

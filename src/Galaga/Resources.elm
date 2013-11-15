@@ -23,7 +23,6 @@ level10 = level "level10"
 level25 = level "level25"
 level50 = level "level50"
 level100 = level "level100"
-level200 = level "level200"
 
 -- All of the enemies are the same size and many of them have 2 frames so
 -- this is convenient
