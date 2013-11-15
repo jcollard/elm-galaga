@@ -7,46 +7,74 @@ import open Graphics.Sprite
 resourceDir : String
 resourceDir = "resources/"
 
--- Uses the sprite function from Graphics.Sprite but tags on the resourceDirectory
--- in front of the base name
-create : String -> String -> Int -> Int -> Int -> Sprite
-create ext baseName parts width height = sprite ext (resourceDir ++ baseName) parts width height
-
--- Convenience function for creating Level sprites
-level : String -> Sprite
-level baseName = create "png" baseName 1 17 18
+-- Read in the sprite sheet
+sheet : Element
+sheet = image 196 224 (resourceDir ++ "galagasheet.png")
 
 -- Level emblem graphic for displaying which Stage the player is currently in
-level1 = level "level1"
-level5 = level "level5"
-level10 = level "level10"
-level20 = level "level20"
-level30 = level "level30"
-level50 = level "level50"
-
--- All of the enemies are the same size and many of them have 2 frames so
--- this is convenient
-enemy : String -> Sprite
-enemy baseName = create "png" baseName 2 17 18
+level1 = cropLevel 0 207
+level5 = cropLevel 19 207
+level10 = cropLevel 38 207
+level20 = cropLevel 57 207
+level30 = cropLevel 76 207
+level50 = cropLevel 95 207
 
 -- All of the enemies
-boss = enemy "boss"
-boss_hit = enemy "boss_hit"
-enemy0 = enemy "enemy0"
-enemy1 = enemy "enemy1"
-enemy2 = create "png" "enemy2" 1 17 18
-enemy3 = enemy "enemy3"
-enemy4 = create "png" "enemy4" 1 17 18
-enemy5 = create "png" "enemy5" 1 17 18
-enemy6 = create "png" "enemy6" 1 17 18
-enemy7 = create "png" "enemy7" 3 17 18
-explode = create "png" "explode" 5 32 32
-capture = create "png" "capture" 3 64 96
+boss = cropEnemy2 38 187
+boss_hit = cropEnemy2 76 187
+enemy0 = cropEnemy2 114 207
+enemy1 = cropEnemy2 114 187
+enemy2 = cropEnemy1 57 166
+enemy3 = cropEnemy2 0 187
+enemy4 = cropEnemy1 76 166
+enemy5 = cropEnemy1 95 166
+enemy6 = cropEnemy1 114 166
+enemy7 = cropEnemy3 0 166
+explode = cropExplosion 0 98 5
+capture = cropCapture 0 1
 
 -- Player ship 
-ship = create "png" "ship" 1 16 16
-death = create "png" "death" 4 32 32
-ship_captured = create "png" "ship_captured" 1 16 16
+ship = cropShip 134 168
+death = cropExplosion 0 132 4
+ship_captured = cropShip 152 168
 
 -- Weapon / Lazer
-weapon = create "png" "weapon" 1 8 8
+weapon = sprite sheet [{top = 216, left=155, width=3, height=8}]
+
+-- Helper Functions
+
+enemyCrop : Int -> Int -> Crop
+enemyCrop left top = { top = top, left = left, width = 17, height = 18 }
+
+explosionCrop : Int -> Int -> Crop
+explosionCrop left top = { top = top, left = left, width = 32, height = 32 }
+
+captureCrop : Int -> Int -> Crop
+captureCrop left top = {top = top, left = left, width = 64, height = 96 }
+
+shipCrop : Int -> Int -> Crop
+shipCrop left top = { top = top, left = left, width = 15, height = 16 }
+
+levelCrop : Int -> Int -> Crop
+levelCrop = enemyCrop
+
+cropEnemy1 : Int -> Int -> Sprite
+cropEnemy1 left top = sprite sheet [(enemyCrop left top)]
+
+cropEnemy2 : Int -> Int -> Sprite
+cropEnemy2 left top = sprite sheet (crops (enemyCrop left top) (right 2) 2)
+
+cropEnemy3 : Int -> Int -> Sprite
+cropEnemy3 left top = sprite sheet (crops (enemyCrop left top) (right 2) 3)
+
+cropExplosion : Int -> Int -> Int -> Sprite
+cropExplosion left top n = sprite sheet (crops (explosionCrop left top) (right 2) n)
+
+cropCapture : Int -> Int -> Sprite
+cropCapture left top = sprite sheet (crops (captureCrop left top) (right 2) 3)
+
+cropShip : Int -> Int -> Sprite
+cropShip left top = sprite sheet [(shipCrop left top)]
+
+cropLevel : Int -> Int -> Sprite
+cropLevel = cropEnemy1
