@@ -6,3 +6,5 @@ hidden
 build/
 cache/
 repl.conf
+*.elmi
+*.elmo
