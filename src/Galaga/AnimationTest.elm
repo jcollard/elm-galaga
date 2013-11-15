@@ -14,13 +14,14 @@ sprites
   = [R.boss, R.boss_hit, R.enemy0, R.enemy1, R.enemy2,
      R.enemy3, R.enemy4, R.enemy5, R.enemy6, R.enemy7,
      R.explode, R.death, R.ship, R.ship_captured,
-     R.level1, R.level5, R.level10, R.level25, R.level50,
-     R.level100, R.capture]
+     R.level1, R.level5, R.level10, R.level20, R.level30,
+     R.level50, R.capture]
 
 
 displayTest t = 
-    let anims = processMany animators t  in
-    color black <| container 200 200 middle <| flowgrid 5 . grid 6 . map draw <| anims
+    let anims = processMany animators t 
+        elem = color black <| container 200 200 middle <| flowgrid 5 . grid 6 . map draw <| anims
+    in collage 400 400 <| [scale 2 . toForm <| elem]
 
 flowgrid : number -> [[Element]] -> Element
 flowgrid s xs = flow down . intersperse (spacer s s) . map (flow right . intersperse (spacer s s)) <| xs

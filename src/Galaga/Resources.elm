@@ -20,9 +20,9 @@ level baseName = create "png" baseName 1 17 18
 level1 = level "level1"
 level5 = level "level5"
 level10 = level "level10"
-level25 = level "level25"
+level20 = level "level20"
+level30 = level "level30"
 level50 = level "level50"
-level100 = level "level100"
 
 -- All of the enemies are the same size and many of them have 2 frames so
 -- this is convenient
