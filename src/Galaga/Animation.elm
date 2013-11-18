@@ -10,5 +10,7 @@ type Image =
 
 type Animation =
   { current : Int
+  , maxFrame : Int
   , frames : Dict Int Image
   }
+
